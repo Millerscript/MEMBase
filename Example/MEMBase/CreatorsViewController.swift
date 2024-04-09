@@ -12,21 +12,18 @@ import MEMBase
 class CreatorsViewController: MEMBaseViewController {
     
     let label: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel.newSet()
         label.textColor = .black
         label.numberOfLines = 1
         label.text = "Creators"
         return label
     }()
     
-    
     let nextView: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton.newSet()
         button.setTitle("Next view", for: .normal)
         button.backgroundColor = .green
         button.tintColor = .white
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -40,8 +37,6 @@ class CreatorsViewController: MEMBaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,19 +53,16 @@ class CreatorsViewController: MEMBaseViewController {
     
     func setLabel() {
         self.view.addSubview(label)
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor)
-        ])
+        label.hookAxis(.horizontal, sameOf: self.view)
+        label.hookAxis(.vertical, sameOf: self.view)
     }
     
     func setButton() {
         self.view.addSubview(nextView)
-        NSLayoutConstraint.activate([
-            nextView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20),
-            nextView.centerXAnchor.constraint(equalTo: label.centerXAnchor),
-            nextView.widthAnchor.constraint(equalToConstant: 100)
-        ])
+        
+        nextView.hook(.top, to: .bottom, of: label, valueInset: 20)
+        nextView.hookAxis(.horizontal, sameOf: label)
+        nextView.setDimension(dimension: .width, value: 100)
         
         nextView.addTarget(self, action: #selector(nextViewAction), for: .touchDown)
     }

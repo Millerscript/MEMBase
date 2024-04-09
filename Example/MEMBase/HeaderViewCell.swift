@@ -8,17 +8,17 @@
 
 import Foundation
 import UIKit
+import MEMBase
 
 class HeaderViewCell: UIView {
     
     let titleLbl: UILabel = {
-        let label = UILabel(frame: .zero)
+        let label = UILabel.newSet()
         label.text = "MCBase App"
         label.textColor = .black
         label.font = UIFont(name: "Poppins-Light", size: 28.0)
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -35,12 +35,9 @@ class HeaderViewCell: UIView {
     
     private func setTitle() {
         self.addSubview(titleLbl)
-        
-        NSLayoutConstraint.activate([
-            titleLbl.topAnchor.constraint(equalTo: self.topAnchor),
-            titleLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            titleLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            titleLbl.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+        titleLbl.hook(.left, to: .left, of: self)
+        titleLbl.hook(.right, to: .right, of: self)
+        titleLbl.hook(.top, to: .top, of: self)
+        titleLbl.hook(.bottom, to: .bottom, of: self)
     }
 }

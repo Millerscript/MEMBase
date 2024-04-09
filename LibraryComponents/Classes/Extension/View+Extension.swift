@@ -9,13 +9,14 @@ import Foundation
 import UIKit
 
 extension UIView {
-    
-    public func newSet() -> Self {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.frame = .zero
-        return self
+    @discardableResult
+    public static func newSet() -> Self {
+        let view = Self()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.frame = .zero
+        return view
     }
-    
+
     @available(*, deprecated, renamed: "hook()", message: "use 'hook' instead")
     public func set(contraints collection: [NSLayoutConstraint]) {
         NSLayoutConstraint.activate(collection)

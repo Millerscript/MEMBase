@@ -16,8 +16,9 @@ class ViewController: MEMBaseViewController {
           static let headerHeight = 100.0
           static let cellHeight = 50.0
       }
-      let tableView = UITableView(frame: .zero)
-      var model: [DeeplinkModel] = []
+    
+    let tableView = UITableView.newSet()
+    var model: [DeeplinkModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
