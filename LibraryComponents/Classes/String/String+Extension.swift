@@ -10,6 +10,8 @@ import UIKit
 
 extension String {
     
+    static var empty = ""
+    
     // calculate label size to show
     public func size(for label: UILabel) -> CGSize {
         let alabel = UILabel(frame: .zero)

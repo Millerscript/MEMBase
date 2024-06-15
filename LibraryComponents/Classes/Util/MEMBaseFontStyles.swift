@@ -28,3 +28,20 @@ public protocol MEMBaseFontStyles {
     func bold(size: CGFloat) -> UIFont?
 }
 
+/*public enum BaseColors: String {
+    case primary
+    case secondary
+}
+
+extension UIColor {
+
+    public func AppColor(_ name: BaseColors) -> UIColor {
+        
+        switch name {
+        case .primary:
+            return UIColor(red: 034, green: 024, blue: 055, alpha: 1)
+        case .secondary:
+            return UIColor(red: 44, green: 147, blue: 255, alpha: 1)
+        }
+    }
+}*/

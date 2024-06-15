@@ -36,4 +36,8 @@ open class MEMBaseViewController: UIViewController {
     public func open(deeplink: String) {
         MEMBaseDeeplinkManager.shared.open(deepLink: deeplink)
     }
+    
+    public func close() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }

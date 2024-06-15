@@ -38,7 +38,8 @@ open class MEMBaseDeeplinkManager {
      * - parameters path: path from the deeplink if exist
      * - returns: the type of Via of the action
      */
-    private func getVia(host: String, path: String) -> Vias {
+    private func getVia(host: String, 
+                        path: String) -> Vias {
         if !path.isEmpty {
             return .PATH
         } else if !host.isEmpty {
@@ -54,9 +55,11 @@ open class MEMBaseDeeplinkManager {
      * - parameters path:
      * - parameters via:
      */
-    private func handle(host: String, path: String, via: Vias) {
+    private func handle(host: String, 
+                        path: String,
+                        via: Vias) {
         
-        let deeplink = (via == .HOST) ? host : getPath(deeplink: path)
+        let deeplink = (via == .HOST) ? host : path // getPath(deeplink: path)
         
         guard let viewControllerStringName = viewControllers[deeplink] else {return}
         
@@ -193,7 +196,7 @@ open class MEMBaseDeeplinkManager {
 
         self.viewControllerData = gatherDataFrom(queryItems: component.queryItems)
         
-        handle(host: host, path: component.path ?? "", via: getVia(host: host, path: component.path ?? ""))
+        handle(host: host, path: component.path ?? .empty, via: getVia(host: host, path: component.path ?? .empty))
     }
     
     /**
@@ -208,7 +211,7 @@ open class MEMBaseDeeplinkManager {
 
         self.viewControllerData = gatherDataFrom(queryItems: component.queryItems)
         
-        handle(host: host, path: component.path ?? "", via: getVia(host: host, path: component.path ?? ""))
+        handle(host: host, path: component.path ?? .empty, via: getVia(host: host, path: component.path ?? .empty))
     }
         
     /**

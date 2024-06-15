@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MEMBase'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Base code for my own projects based in my experience.'
   s.swift_version    = '5.0'
 # This description is used to generate tags and improve search results.
