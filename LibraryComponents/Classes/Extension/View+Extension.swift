@@ -210,7 +210,8 @@ extension UIView {
     // In order to create computed properties for extensions, we need a key to
     // store and access the stored property
     fileprivate struct AssociatedObjectKeys {
-        static var tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
+        //static var tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
+        static var tapGestureRecognizer: UInt8 = 0
     }
     
     fileprivate typealias Action = (() -> Void)?
