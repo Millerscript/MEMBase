@@ -23,6 +23,7 @@ open class MEMBaseViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
     }
     
     public func hideNavigationBar() {

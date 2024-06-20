@@ -28,6 +28,22 @@ extension UIView {
         NSLayoutConstraint.activate(collection)
     }
     
+    /**
+     * Update the hook for the view
+     * - parameters dimesion: Height or Width
+     * - parameters value: value to update
+     */
+    public func updateHookFor(dimension: HDimension, value: CGFloat = 0.0) {
+        self.constraints.forEach { constraint in
+            if dimension == .height {
+                if constraint.identifier == "height" {
+                    constraint.constant = value
+                }
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
     public func hook(_ edge: HBound, to: HBound, of: UIView, valueInset: CGFloat? = 0.0) {
         setAnchor(edge, to: to, of: of, valueInset: valueInset)
     }
@@ -115,7 +131,10 @@ extension UIView {
         case .width:
             self.widthAnchor.constraint(equalToConstant: value).isActive = true
         case .height:
-            self.heightAnchor.constraint(equalToConstant: value).isActive = true
+            let heightConstraint = self.heightAnchor.constraint(equalToConstant: value)
+            heightConstraint.identifier = "height"
+            NSLayoutConstraint.activate([heightConstraint])
+            //self.heightAnchor.constraint(equalToConstant: value).isActive = true
         }
     }
     
@@ -179,6 +198,53 @@ extension UIView {
             self.leadingAnchor.constraint(equalTo: superview.leadingAnchor).isActive = true
             self.trailingAnchor.constraint(equalTo: superview.trailingAnchor).isActive = true
             self.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        }
+    }
+}
+
+// MARK: - Set an action to an uiview from anywhere
+// - Link: https://medium.com/@sdrzn/adding-gesture-recognizers-with-closures-instead-of-selectors-9fb3e09a8f0b
+// - authors: Saoud M. Rizwan
+extension UIView {
+    
+    // In order to create computed properties for extensions, we need a key to
+    // store and access the stored property
+    fileprivate struct AssociatedObjectKeys {
+        static var tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
+    }
+    
+    fileprivate typealias Action = (() -> Void)?
+    
+    // Set our computed property type to a closure
+    fileprivate var tapGestureRecognizerAction: Action? {
+        set {
+            if let newValue = newValue {
+                // Computed properties get stored as associated objects
+                objc_setAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            }
+        }
+        get {
+            let tapGestureRecognizerActionInstance = objc_getAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer) as? Action
+            return tapGestureRecognizerActionInstance
+        }
+    }
+    
+    // This is the meat of the sauce, here we create the tap gesture recognizer and
+    // store the closure the user passed to us in the associated object we declared above
+    public func addTapGestureRecognizer(action: (() -> Void)?) {
+        self.isUserInteractionEnabled = true
+        self.tapGestureRecognizerAction = action
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    // Every time the user taps on the UIImageView, this function gets called,
+    // which triggers the closure we stored
+    @objc fileprivate func handleTapGesture(sender: UITapGestureRecognizer) {
+        if let action = self.tapGestureRecognizerAction {
+            action?()
+        } else {
+            print("no action")
         }
     }
 }
